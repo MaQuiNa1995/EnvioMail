@@ -1,5 +1,7 @@
 package es.maquina1995.mail.gestor;
 
-public class GestorMail {
+public interface GestorMail {
+
+	void envioCorreo(String asunto, String mensaje);
 
 }
