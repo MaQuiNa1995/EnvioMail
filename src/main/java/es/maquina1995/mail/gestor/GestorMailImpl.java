@@ -66,11 +66,6 @@ public class GestorMailImpl implements GestorMail {
 			// Seteamos el asunto
 			message.setSubject(asunto);
 
-			// Creamos el cuerpo del mensaje
-			BodyPart texto = new MimeBodyPart();
-			// Seteamos el cuerpo del mensaje
-			texto.setText(mensaje);
-
 			// Por si quieres adjuntar ficheros...
 			// DataSource fuente = new FileDataSource(adjunto);
 			// texto.setDataHandler(new DataHandler(fuente));
@@ -78,6 +73,11 @@ public class GestorMailImpl implements GestorMail {
 
 			// Creamos las partes del correo
 			MimeMultipart multiParte = new MimeMultipart();
+
+			// Creamos el cuerpo del mensaje
+			BodyPart texto = new MimeBodyPart();
+			// Seteamos el cuerpo del mensaje
+			texto.setText(mensaje);
 			// Seteamos el cuerpo que contiene el mensaje
 			multiParte.addBodyPart(texto);
 			// Lo añadimos al correo
