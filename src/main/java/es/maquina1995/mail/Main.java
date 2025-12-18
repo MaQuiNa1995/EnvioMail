@@ -1,11 +1,12 @@
 package es.maquina1995.mail;
 
-import org.apache.log4j.PropertyConfigurator;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import es.maquina1995.mail.configuration.ConfiguracionSpring;
-import es.maquina1995.mail.gestor.GestorMail;
-import es.maquina1995.mail.gestor.GestorMailImpl;
+import es.maquina1995.mail.service.MailService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Clase main que inicia la aplicación
@@ -13,26 +14,19 @@ import es.maquina1995.mail.gestor.GestorMailImpl;
  * @author MaQuiNa1995
  *
  */
-public class Main {
+@RequiredArgsConstructor
+@SpringBootApplication
+public class Main implements CommandLineRunner{
 
-	/**
-	 * Método principal de la aplicación
-	 * 
-	 * @param args
-	 */
-	public static void main(String... args) {
+	public static void main(String[] args) {
+		SpringApplication.run(Main.class, args);
+	}
+	
+	@Autowired
+	private final MailService mailService;
 
-		// Configuración de la ruta del properties
-		PropertyConfigurator.configure("log4j.properties");
-
-		try (AnnotationConfigApplicationContext contexto = new AnnotationConfigApplicationContext(
-				ConfiguracionSpring.class)) {
-
-			GestorMail gestorMail = (GestorMailImpl) contexto
-					.getBean("gestorMail");
-
-			gestorMail.envioCorreo("Asunto",
-					"Descripcion del mensaje c(*_*c) ");
-		}
+	@Override
+	public void run(String... args) throws Exception {
+		mailService.enviarEmail("maquina1995Prueba@gmail.com", "Prueba Asunto", "Contenido de prueba");
 	}
 }
